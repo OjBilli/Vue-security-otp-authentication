@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/request', [ProfileController::class, 'create'])->name('request');
     Route::post('/store-request', [ProfileController::class, 'store'])->name('send.otp.request');
 
+    Route::get('/verify', [ProfileController::class, 'verify'])->name('verify');
+    Route::post('/verify-request', [ProfileController::class, 'verify_request'])->name('verify.otp.request');
+
 
 });
 

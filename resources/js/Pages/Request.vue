@@ -19,26 +19,27 @@ const form = useForm({
     email: props.email,
 });
 
+
 const submit = () => {
     form.post(route('send.otp.request'), {
-        onSuccess: () => alert("OTP has been sent to your email!")
+        onSuccess: () => {
+            alert("OTP has been sent to your email!");
+            form.get(route('verify'), { email: form.email }); // 🔥 FIXED REDIRECTION
+        },
     });
 };
-
-// const verificationLinkSent = computed(
-//     () => props.status === 'verification-link-sent',
-// );
-
 // const submit = () => {
-//     form.post(route('password.store'), {
-//         onFinish: () => form.reset('password', 'password_confirmation'),
+//     form.post(route('send.otp.request'), {
+//         onSuccess: () => alert("OTP has been sent to your email!")
 //     });
 // };
+
+
 </script>
 
 
 <template>
-    <Head title="Request" />
+    <Head title="Request OTP" />
 
     <AuthenticatedLayout>
         <form @submit.prevent="submit">
@@ -52,7 +53,6 @@ const submit = () => {
                     v-model="form.email"
                     required
                     autofocus
-                    autocomplete="username"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
